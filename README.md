@@ -2,19 +2,19 @@
 
 NovaStack's menu service: a tiny Flask web app used in **Lecture 5 (Docker)** of
 *Mastering CS Technical Competencies*. It is deliberately small: one file of
-code, one dependency.
+code, one HTML template, one dependency.
 
 | Route | What it returns |
 |---|---|
 | `/` | A menu page: the heading `NovaStack menu is open` (the title comes from the `MENU_TITLE` environment variable), a card per item, and which system and machine it's running on |
-| `/menu` | The NovaStack menu as JSON (18 items) |
+| `/menu` | The NovaStack menu (18 items): the same card page in a browser, **JSON** for `curl` and scripts (or add `?format=json`) |
 | `/health` | `{"status": "ok"}` |
 
 ## Files
 
 | File | Used in |
 |---|---|
-| `app.py`, `menu.json` | The service itself |
+| `app.py`, `templates/index.html`, `menu.json` | The service itself: the code, the page's HTML, and the menu |
 | `pyproject.toml`, `uv.lock`, `.python-version` | Running it **on your laptop** with uv (`uv run app.py`) |
 | `requirements.txt` | The same dependency (`flask==3.1.3`) for the **Dockerfiles** (`pip install -r requirements.txt`) |
 | `Dockerfile.step3-saved-draft` | **Step 3**: an AI-style first draft that forgets to install Flask |

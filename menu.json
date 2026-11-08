@@ -3,108 +3,126 @@
     "sku": "M01",
     "name": "Chicken wrap",
     "category": "main",
-    "price": "5.20"
+    "price": "5.20",
+    "icon": "🌯"
   },
   {
     "sku": "M02",
     "name": "Falafel wrap",
     "category": "main",
-    "price": "4.90"
+    "price": "4.90",
+    "icon": "🧆"
   },
   {
     "sku": "M03",
     "name": "Beef burger",
     "category": "main",
-    "price": "6.80"
+    "price": "6.80",
+    "icon": "🍔"
   },
   {
     "sku": "M04",
     "name": "Halloumi burger",
     "category": "main",
-    "price": "6.40"
+    "price": "6.40",
+    "icon": "🧀"
   },
   {
     "sku": "M05",
     "name": "Jacket potato, beans",
     "category": "main",
-    "price": "4.20"
+    "price": "4.20",
+    "icon": "🥔"
   },
   {
     "sku": "M06",
     "name": "Katsu curry",
     "category": "main",
-    "price": "7.10"
+    "price": "7.10",
+    "icon": "🍛"
   },
   {
     "sku": "S01",
     "name": "Fries",
     "category": "side",
-    "price": "2.10"
+    "price": "2.10",
+    "icon": "🍟"
   },
   {
     "sku": "S02",
     "name": "Sweet potato fries",
     "category": "side",
-    "price": "2.60"
+    "price": "2.60",
+    "icon": "🍠"
   },
   {
     "sku": "S03",
     "name": "Side salad",
     "category": "side",
-    "price": "1.90"
+    "price": "1.90",
+    "icon": "🥗"
   },
   {
     "sku": "S04",
     "name": "Onion rings",
     "category": "side",
-    "price": "2.30"
+    "price": "2.30",
+    "icon": "🧅"
   },
   {
     "sku": "D01",
     "name": "Cola",
     "category": "drink",
-    "price": "1.60"
+    "price": "1.60",
+    "icon": "🥤"
   },
   {
     "sku": "D02",
     "name": "Orange juice",
     "category": "drink",
-    "price": "1.80"
+    "price": "1.80",
+    "icon": "🧃"
   },
   {
     "sku": "D03",
     "name": "Sparkling water",
     "category": "drink",
-    "price": "1.20"
+    "price": "1.20",
+    "icon": "💧"
   },
   {
     "sku": "D04",
     "name": "Flat white",
     "category": "drink",
-    "price": "2.95"
+    "price": "2.95",
+    "icon": "☕"
   },
   {
     "sku": "P01",
     "name": "Brownie",
     "category": "dessert",
-    "price": "2.40"
+    "price": "2.40",
+    "icon": "🍫"
   },
   {
     "sku": "P02",
     "name": "Fruit pot",
     "category": "dessert",
-    "price": "1.95"
+    "price": "1.95",
+    "icon": "🍓"
   },
   {
     "sku": "N01",
     "name": "Crisps",
     "category": "snack",
-    "price": "0.95"
+    "price": "0.95",
+    "icon": "🥨"
   },
   {
     "sku": "N02",
     "name": "Flapjack",
     "category": "snack",
-    "price": "1.45"
+    "price": "1.45",
+    "icon": "🍪"
   }
 ]

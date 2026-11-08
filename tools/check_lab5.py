@@ -142,7 +142,7 @@ def check_menu_service(image: str, title: str) -> None:
             report("PASS", "The page reads its title from MENU_TITLE (-e)")
         else:
             report("FAIL", "The page reads its title from MENU_TITLE (-e)",
-                   f"GET / gave {code}; expected a page whose heading says '{title} is open'. (Undo your Step 5 heading edit with `git restore app.py`.) "
+                   f"GET / gave {code}; expected a page whose heading says '{title} is open'. (Undo your Step 5 heading edit with `git restore templates/index.html`.) "
                    "Is the app listening on 0.0.0.0, and did the image install Flask?")
         code, body = http_get(base + "/menu", tries=3)
         try:

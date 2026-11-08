@@ -90,8 +90,6 @@ door").
 
 - Print the architecture of your image: `docker image inspect tea:1.0 --format "{{.Os}}/{{.Architecture}}"`.
   Is it `arm64` or `amd64`? Why might that matter on a cloud server?
-- Run `docker history tea:1.0`. Which layer is the biggest, and which line of
-  your `Dockerfile` made it?
 - Edit the text in `app.py`, rebuild and watch which steps say `CACHED`.
 
 <details><summary>Answers to the three blanks (for after the exercise)</summary>
