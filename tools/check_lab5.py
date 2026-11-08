@@ -80,7 +80,12 @@ def answers(path: Path) -> dict[str, str]:
     out: dict[str, str] = {}
     if not path.exists():
         return out
-    for line in path.read_text(encoding="utf-8").splitlines():
+    try:
+        text = path.read_text(encoding="utf-8-sig")
+    except UnicodeDecodeError:
+        print(f"{path.name} isn't saved as UTF-8 (PowerShell's > writes UTF-16). Open it in VS Code and save it as UTF-8.")
+        return out
+    for line in text.splitlines():
         m = re.match(r"^\s*([A-Z]{1,3}\d?[a-z]?\d*):\s*(.*?)\s*$", line)
         if m and m.group(2) and not m.group(2).startswith("<"):
             out[m.group(1)] = m.group(2)
@@ -133,11 +138,11 @@ def check_menu_service(image: str, title: str) -> None:
                    + logs.strip().splitlines()[-1][:100] if logs.strip() else out.strip()[:100])
             return
         code, body = http_get(base + "/")
-        if code == 200 and body.strip() == f"{title} is open":
+        if code == 200 and body.strip().startswith(f"{title} is open"):
             report("PASS", "The page reads its title from MENU_TITLE (-e)")
         else:
             report("FAIL", "The page reads its title from MENU_TITLE (-e)",
-                   f"GET / gave {code} {body.strip()[:60]!r}. Expected '{title} is open'. "
+                   f"GET / gave {code} {body.strip()[:60]!r}. Expected '{title} is open'. (Undo your Step 5 greeting edit with `git restore app.py`.) "
                    "Is the app listening on 0.0.0.0, and did the image install Flask?")
         code, body = http_get(base + "/menu", tries=3)
         try:
@@ -177,7 +182,7 @@ def beginner() -> None:
            "A3: the exact Postgres version in the postgres:16 image",
            f"Run `docker run --rm postgres:16 postgres --version`. It prints: {out.strip()[:60] or '?'}")
 
-    report("PASS" if sheet.get("A4", "").strip() == "1" else "FAIL",
+    report("PASS" if number(sheet.get("A4")) == 1 else "FAIL",
            "A4: the exit code of the container that forgot to install Flask",
            "Build Dockerfile.step3-saved-draft, run it, then look at `docker ps -a` (Exited (N)).")
 
@@ -241,7 +246,10 @@ def intermediate() -> None:
     copies = instr(lines, "COPY")
     runs = [i for i, ln in enumerate(lines) if "pip install" in ln]
     req = [i for i in copies if "requirements" in lines[i]]
-    allc = [i for i in copies if re.search(r"COPY\s+\.\s+\.", lines[i])]
+    def copy_args(ln: str) -> list[str]:
+        return [a for a in ln.split()[1:] if not a.startswith("--")]
+
+    allc = [i for i in copies if copy_args(lines[i])[:1] == ["."]]
     ok = bool(req and runs and allc and req[0] < runs[0] < allc[0])
     report("PASS" if ok else "FAIL", "Dockerfile order: COPY requirements.txt, then pip install, then COPY . .",
            "Put what changes least first (see Step 5 of the demo).")
@@ -350,8 +358,9 @@ def advanced() -> None:
     report("PASS" if env_path.exists() and rc == 0 and not tracked.strip() else "FAIL",
            ".env exists, is git-ignored and is not committed",
            "Copy .env.example to .env, and make sure .gitignore lists .env (git status must not show it).")
-    report("PASS" if pw and pw != "change-me" else "FAIL", "You chose your own database password",
-           "Edit POSTGRES_PASSWORD in advanced/.env.")
+    report("PASS" if re.fullmatch(r"[A-Za-z0-9]{8,}", pw) and pw != "change-me" else "FAIL",
+           "You chose your own password: at least 8 letters and digits only",
+           "Edit POSTGRES_PASSWORD in advanced/.env. Letters and digits only, because it goes into a URL.")
     ex = (base / ".env.example")
     report("PASS" if ex.exists() and "change-me" in ex.read_text(encoding="utf-8") else "FAIL",
            ".env.example holds only a placeholder password", "Never put your real password in .env.example.")
@@ -395,7 +404,7 @@ def advanced() -> None:
         report("PASS" if dep.get("condition") == "service_healthy" else "FAIL", "app waits for db to be healthy",
                "depends_on: db: condition: service_healthy")
         url = (app.get("environment", {}) or {}).get("DATABASE_URL", "")
-        report("PASS" if "@db:" in url else "FAIL", "DATABASE_URL reaches the database by service name (@db:5432)",
+        report("PASS" if re.search(r"@db[:/]", url) else "FAIL", "DATABASE_URL reaches the database by service name (@db:5432)",
                "Inside Compose, use the service name `db`, not localhost.")
 
         # ---- run it for real, with its own project name, then test persistence
@@ -448,11 +457,12 @@ def advanced() -> None:
                "Settings go in at run time (environment or env_file), never in the Dockerfile.")
     finally:
         compose(tmp / "advanced", "down", "-v")
+        docker("rmi", "-f", "lab5check-app")
         shutil.rmtree(tmp, ignore_errors=True)
 
     seed = (base / "db" / "init" / "01_schema.sql").read_text(encoding="utf-8")
     failed = len(re.findall(r"'failed'", seed.split("VALUES", 1)[-1]))
-    report("PASS" if sheet.get("D1", "").strip().lower() == "db" else "FAIL", "D1: the hostname the app uses to reach the database",
+    report("PASS" if re.match(r"\W*db\b", sheet.get("D1", "").strip().lower()) else "FAIL", "D1: the hostname the app uses to reach the database",
            "What is the Compose service name?")
     report("PASS" if number(sheet.get("D2")) == failed else "FAIL", "D2: how many orders have status 'failed'",
            "`docker compose exec db psql -U <user> -d <db> -c \"SELECT count(*) FROM orders WHERE status = 'failed';\"`")

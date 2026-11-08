@@ -21,10 +21,13 @@ code, one dependency.
 | `compose.yaml`, `db/init/01_menu.sql`, `.env.example` | **Step 6**: the service plus a Postgres 16 database |
 | `extras/dockerignore.example` | Step 5 and the Intermediate lab: copy to `.dockerignore` |
 | `lab5/`, `tools/check_lab5.py` | The Lecture 5 labs: answer sheets and the self-check (`uv run tools/check_lab5.py beginner`) |
+| `exercise/` | Exercise ORD-371 (Part 0 of each lab): an unfinished Dockerfile and a page that won't load |
 | `advanced/` | The Advanced lab starter: a service that counts orders in Postgres, plus 200 seeded orders. You write `compose.yaml` |
 | `.devcontainer/` | A fallback for GitHub Codespaces (Docker inside the codespace) |
 
 ## Run it with Docker
+
+macOS / Linux (on Windows PowerShell use `Copy-Item` for `cp` and `curl.exe` for `curl`):
 
 ```bash
 cp Dockerfile.step5 Dockerfile
