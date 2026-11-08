@@ -1,0 +1,110 @@
+[
+  {
+    "sku": "M01",
+    "name": "Chicken wrap",
+    "category": "main",
+    "price": "5.20"
+  },
+  {
+    "sku": "M02",
+    "name": "Falafel wrap",
+    "category": "main",
+    "price": "4.90"
+  },
+  {
+    "sku": "M03",
+    "name": "Beef burger",
+    "category": "main",
+    "price": "6.80"
+  },
+  {
+    "sku": "M04",
+    "name": "Halloumi burger",
+    "category": "main",
+    "price": "6.40"
+  },
+  {
+    "sku": "M05",
+    "name": "Jacket potato, beans",
+    "category": "main",
+    "price": "4.20"
+  },
+  {
+    "sku": "M06",
+    "name": "Katsu curry",
+    "category": "main",
+    "price": "7.10"
+  },
+  {
+    "sku": "S01",
+    "name": "Fries",
+    "category": "side",
+    "price": "2.10"
+  },
+  {
+    "sku": "S02",
+    "name": "Sweet potato fries",
+    "category": "side",
+    "price": "2.60"
+  },
+  {
+    "sku": "S03",
+    "name": "Side salad",
+    "category": "side",
+    "price": "1.90"
+  },
+  {
+    "sku": "S04",
+    "name": "Onion rings",
+    "category": "side",
+    "price": "2.30"
+  },
+  {
+    "sku": "D01",
+    "name": "Cola",
+    "category": "drink",
+    "price": "1.60"
+  },
+  {
+    "sku": "D02",
+    "name": "Orange juice",
+    "category": "drink",
+    "price": "1.80"
+  },
+  {
+    "sku": "D03",
+    "name": "Sparkling water",
+    "category": "drink",
+    "price": "1.20"
+  },
+  {
+    "sku": "D04",
+    "name": "Flat white",
+    "category": "drink",
+    "price": "2.95"
+  },
+  {
+    "sku": "P01",
+    "name": "Brownie",
+    "category": "dessert",
+    "price": "2.40"
+  },
+  {
+    "sku": "P02",
+    "name": "Fruit pot",
+    "category": "dessert",
+    "price": "1.95"
+  },
+  {
+    "sku": "N01",
+    "name": "Crisps",
+    "category": "snack",
+    "price": "0.95"
+  },
+  {
+    "sku": "N02",
+    "name": "Flapjack",
+    "category": "snack",
+    "price": "1.45"
+  }
+]

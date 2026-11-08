@@ -1,0 +1,6 @@
+# Step 3: "one I saved earlier". A typical AI first draft that forgets to
+# install the dependencies. The container will start, then stop at once.
+FROM python:3.12-slim
+WORKDIR /app
+COPY . .
+CMD ["python", "app.py"]

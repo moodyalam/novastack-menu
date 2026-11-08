@@ -1,0 +1,26 @@
+# Step 6: the menu service and its database, started with one command.
+services:
+  menu:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      MENU_TITLE: "NovaStack menu (Compose)"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16
+    env_file: .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:
