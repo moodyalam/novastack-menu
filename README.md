@@ -6,7 +6,7 @@ code, one dependency.
 
 | Route | What it returns |
 |---|---|
-| `/` | A one-line page: `NovaStack menu is open` (the title comes from the `MENU_TITLE` environment variable) |
+| `/` | A menu page: the heading `NovaStack menu is open` (the title comes from the `MENU_TITLE` environment variable), a card per item, and which system and machine it's running on |
 | `/menu` | The NovaStack menu as JSON (18 items) |
 | `/health` | `{"status": "ok"}` |
 
@@ -14,7 +14,9 @@ code, one dependency.
 
 | File | Used in |
 |---|---|
-| `app.py`, `requirements.txt`, `menu.json` | The service itself |
+| `app.py`, `menu.json` | The service itself |
+| `pyproject.toml`, `uv.lock`, `.python-version` | Running it **on your laptop** with uv (`uv run app.py`) |
+| `requirements.txt` | The same dependency (`flask==3.1.3`) for the **Dockerfiles** (`pip install -r requirements.txt`) |
 | `Dockerfile.step3-saved-draft` | **Step 3**: an AI-style first draft that forgets to install Flask |
 | `Dockerfile.step4` | **Step 4**: the simple fix |
 | `Dockerfile.step5` | **Step 5**: the cached version (copy it to `Dockerfile` if you skipped Step 5: Compose builds `Dockerfile`) |
@@ -52,8 +54,18 @@ docker compose down
 start; never commit it. `docker compose down -v` also deletes the database's
 volume.
 
-## Run it without Docker (optional)
+## Run it on your laptop (without Docker)
 
 ```bash
-uv run --with flask==3.1.3 python app.py
+uv sync
+uv run app.py
 ```
+
+`uv sync` creates `.venv/` in this folder (Python 3.12 and Flask, from `uv.lock`);
+`uv run app.py` uses it (and creates it first if you skipped `uv sync`). Open
+<http://localhost:8000> and stop it with `Ctrl+C`. Without uv:
+`python -m venv .venv`, then `.venv/bin/pip install -r requirements.txt`
+(Windows: `.venv\Scripts\pip`), then `.venv/bin/python app.py`.
+
+Flask is then installed in `.venv` **on your laptop only**. A Docker image never
+sees it: the image installs its own (that's Step 3's lesson).

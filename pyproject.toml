@@ -1,0 +1,7 @@
+[project]
+name = "novastack-menu"
+version = "0.1.0"
+description = "NovaStack menu service: a small web page and a JSON menu (Lecture 5)"
+requires-python = ">=3.12"
+# Keep this in step with requirements.txt, which the Dockerfiles use.
+dependencies = ["flask==3.1.3"]

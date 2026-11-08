@@ -138,11 +138,11 @@ def check_menu_service(image: str, title: str) -> None:
                    + logs.strip().splitlines()[-1][:100] if logs.strip() else out.strip()[:100])
             return
         code, body = http_get(base + "/")
-        if code == 200 and body.strip().startswith(f"{title} is open"):
+        if code == 200 and f"{title} is open" in body:
             report("PASS", "The page reads its title from MENU_TITLE (-e)")
         else:
             report("FAIL", "The page reads its title from MENU_TITLE (-e)",
-                   f"GET / gave {code} {body.strip()[:60]!r}. Expected '{title} is open'. (Undo your Step 5 greeting edit with `git restore app.py`.) "
+                   f"GET / gave {code}; expected a page whose heading says '{title} is open'. (Undo your Step 5 heading edit with `git restore app.py`.) "
                    "Is the app listening on 0.0.0.0, and did the image install Flask?")
         code, body = http_get(base + "/menu", tries=3)
         try:
