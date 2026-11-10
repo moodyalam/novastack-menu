@@ -1,6 +1,11 @@
 # Step 4: the simple fix. It works, but every code change reinstalls Flask.
+# Start from the official Python 3.12 image. "slim" is the small version.
 FROM python:3.12-slim
+# Make /app the working folder inside the container (created if it is missing).
 WORKDIR /app
+# Copy everything from my project folder into /app inside the image.
 COPY . .
+# While BUILDING the image, install Flask and the other requirements into it.
 RUN pip install -r requirements.txt
+# When the container starts, run: python app.py
 CMD ["python", "app.py"]

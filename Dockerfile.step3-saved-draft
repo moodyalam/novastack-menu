@@ -1,6 +1,10 @@
 # Step 3: "one I saved earlier". A typical AI first draft that forgets to
 # install the dependencies. The container will start, then stop at once.
+# Start from the official Python 3.12 image. "slim" is the small version.
 FROM python:3.12-slim
+# Make /app the working folder inside the container (created if it is missing).
 WORKDIR /app
+# Copy everything from my project folder into /app inside the image.
 COPY . .
+# When the container starts, run: python app.py
 CMD ["python", "app.py"]
