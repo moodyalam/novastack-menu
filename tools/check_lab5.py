@@ -195,19 +195,19 @@ def beginner() -> None:
     report("PASS" if n >= 3 else "FAIL", "Your Dockerfile has a `# why:` comment on at least 3 lines",
            f"Found {n}. Explain each line you keep, in your own words: `# why: ...`")
 
-    rc, out = docker("image", "inspect", f"{IMAGE}:1.0", "--format", "{{.Id}}")
+    rc, out = docker("image", "inspect", f"{IMAGE}:1.0-ready", "--format", "{{.Id}}")
     if rc != 0:
-        report("FAIL", f"The image {IMAGE}:1.0 exists", f"Build it: docker build -t {IMAGE}:1.0 .")
+        report("FAIL", f"The image {IMAGE}:1.0-ready exists", f"Build it: docker build -t {IMAGE}:1.0-ready .")
         report("SKIP", "A5: your image ID matches")
         report("SKIP", "The service answers correctly in a container")
     else:
-        report("PASS", f"The image {IMAGE}:1.0 exists")
+        report("PASS", f"The image {IMAGE}:1.0-ready exists")
         image_id = out.strip().split(":")[-1]
         a5 = sheet.get("A5", "").lower().replace("sha256:", "").strip()
         report("PASS" if len(a5) >= 12 and image_id.startswith(a5[:12]) else "FAIL",
                "A5: the first 12 characters of your image's ID",
-               f"Run `docker images {IMAGE}` and copy the IMAGE ID of {IMAGE}:1.0.")
-        check_menu_service(f"{IMAGE}:1.0", "Lab check")
+               f"Run `docker images {IMAGE}` and copy the IMAGE ID of {IMAGE}:1.0-ready.")
+        check_menu_service(f"{IMAGE}:1.0-ready", "Lab check")
 
     why = sheet.get("A6", "").lower()
     report("PASS" if len(why.split()) >= 6 and re.search(r"flask|install|depend|requirement|pip", why) else "FAIL",
@@ -220,11 +220,11 @@ def beginner() -> None:
     else:
         try:
             with urllib.request.urlopen(
-                f"https://hub.docker.com/v2/repositories/{user}/{IMAGE}/tags/1.0", timeout=10
+                f"https://hub.docker.com/v2/repositories/{user}/{IMAGE}/tags/1.0-ready", timeout=10
             ) as r:
-                report("PASS" if r.status == 200 else "FAIL", f"(optional) {user}/{IMAGE}:1.0 is on Docker Hub")
+                report("PASS" if r.status == 200 else "FAIL", f"(optional) {user}/{IMAGE}:1.0-ready is on Docker Hub")
         except Exception:
-            report("FAIL", f"(optional) {user}/{IMAGE}:1.0 is on Docker Hub",
+            report("FAIL", f"(optional) {user}/{IMAGE}:1.0-ready is on Docker Hub",
                    "Push it (docker tag, docker push) and make sure the repository is public.")
 
 
