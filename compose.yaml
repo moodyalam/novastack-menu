@@ -1,26 +1,42 @@
 # Step 6: the menu service and its database, started with one command.
+# The containers that make up the application. Each name below is one service.
 services:
+  # Service 1: our Flask app.
   menu:
+    # Build the image from the Dockerfile in this folder.
     build: .
+    # Publish a port, as docker run -p does: host port 8000 -> container port 8000.
     ports:
       - "8000:8000"
+    # Environment variables for the container (the same as docker run -e).
     environment:
       MENU_TITLE: "NovaStack menu (Compose)"
+    # Start this service only after "db" reports it is healthy (ready for connections).
     depends_on:
       db:
         condition: service_healthy
 
+  # Service 2: the database.
   db:
+    # Use the official ready-made Postgres 16 image (nothing to build).
     image: postgres:16
+    # Read the database user, password and name from the .env file (never committed).
     env_file: .env
     volumes:
+      # A named volume (declared at the bottom): the data survives the container being removed.
       - pgdata:/var/lib/postgresql/data
+      # Put the files from db/init where Postgres looks for start-up scripts (:ro = read-only).
       - ./db/init:/docker-entrypoint-initdb.d:ro
+    # How Compose asks the database "are you ready?"
     healthcheck:
+      # pg_isready succeeds once Postgres accepts connections. $$ stops Compose
+      # substituting the variable, so the shell inside the container reads it.
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      # Check every 3 seconds, give each check 3 seconds, and give up after 10 failures.
       interval: 3s
       timeout: 3s
       retries: 10
 
+# Declare the named volume used by the db service above.
 volumes:
   pgdata:
