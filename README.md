@@ -34,7 +34,7 @@ macOS / Linux (on Windows PowerShell use `Copy-Item` for `cp` and `curl.exe` for
 ```bash
 cp Dockerfile.step5 Dockerfile
 docker build -t novastack-menu:1.0 .
-docker run -d --name menu -p 8000:8000 novastack-menu:1.0
+docker run -d --name menu -p 8000:8000 novastack-menu:1.0; echo http://localhost:8000
 curl localhost:8000/menu
 ```
 

@@ -22,7 +22,7 @@
 <body>
   <header>
     <h1>{{ title }} is open</h1>
-    <p class="box">📦 Running on {{ system }} · machine {{ machine }}</p>
+    <p class="box">📦 Running on {{ system }}{% if in_docker %} via Docker · {{ image if image else "container " ~ machine }}{% else %} · machine {{ machine }}{% endif %}</p>
   </header>
   <main>
     {% for item in menu %}
