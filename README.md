@@ -45,7 +45,7 @@ Build a different Dockerfile with `-f`, for example
 
 ```bash
 cp .env.example .env
-docker compose up -d
+docker compose up -d; echo http://localhost:8000
 docker compose exec db psql -U menu -c "SELECT count(*) FROM items;"
 docker compose down
 ```

@@ -44,11 +44,12 @@ docker build -t tea:1.0 .
 - `-t tea:1.0` gives it a name and a version tag.
 
 ```bash
-docker run -d --name tea -p 8001:8001 tea:1.0
+docker run -d --name tea -p 8001:8001 tea:1.0; echo http://localhost:8001
 ```
 
 - `-d` runs it in the background; `--name tea` names the container.
 - `-p 8001:8001` means *my door 8001 → the box's door 8001* (**host:container**).
+- `; echo http://localhost:8001` prints a link you can **Ctrl+click** (macOS: **Cmd+click**).
 
 ```bash
 docker logs tea
