@@ -5,3 +5,13 @@ description = "NovaStack menu service: a small web page and a JSON menu (Lecture
 requires-python = ">=3.12"
 # Keep this in step with requirements.txt, which the Dockerfiles use.
 dependencies = ["flask==3.1.3"]
+
+# Lecture 6: tools for developing, not for running the menu.
+# uv sync installs the "dev" group by default; the Docker image never sees it.
+[dependency-groups]
+dev = ["pytest>=8"]
+
+# Lecture 6: where pytest looks for tests, and lets them "import app".
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

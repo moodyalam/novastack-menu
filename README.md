@@ -69,3 +69,28 @@ uv run app.py
 
 Flask is then installed in `.venv` **on your laptop only**. A Docker image never
 sees it: the image installs its own (that's Step 3's lesson).
+
+## Lecture 6: tests and CI
+
+Lecture 6 (*Nobody Breaks It Again*) adds Dan's tests and a robot that runs
+them. There is **no workflow in `.github/workflows/`**: you write it yourself.
+
+```bash
+uv sync
+uv run pytest
+```
+
+`uv sync` also installs the `dev` group (pytest) from `uv.lock`; `uv run pytest`
+runs the five tests in `tests/` (the sixth, the price test, is yours to add).
+Without uv: `python -m pip install -r requirements-dev.txt`, then
+`python -m pytest`.
+
+| File | Used in |
+|---|---|
+| `tests/test_menu.py` | **Steps 1-2**: Dan's five promises about the menu |
+| `requirements-dev.txt` | The pip route: the app's packages plus pytest |
+| `extras/ci.step3.yml` | **Step 3**: the saved workflow (copy it to `.github/workflows/ci.yml`) |
+| `extras/ci.step6.yml` | **Step 6**: the same, plus a job that builds the image and publishes it to `ghcr.io` after the tests pass on `main` |
+| `extras/exercise.blank.yml` | Exercise ORD-384: a workflow with three blanks |
+| `exercise/test_teatime.py` | Exercise ORD-384: two tests for the tea-time special (`python -m pytest exercise`) |
+| `lab6/`, `tools/check_lab6.py` | The Lecture 6 labs: answer sheets and the self-check (`uv run tools/check_lab6.py beginner`) |

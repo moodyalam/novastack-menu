@@ -1,0 +1,27 @@
+# Exercise ORD-384: a robot that runs the tea-time tests.
+# Copy this file to .github/workflows/exercise.yml, then replace each
+# ____ (three blanks). The comment above each blank says what goes there.
+name: Exercise
+
+# BLANK 1: the event that starts this workflow (what you do after a commit).
+on: ____
+
+# What the job may do with the repository: read it, nothing more.
+permissions:
+  contents: read
+
+jobs:
+  teatime:
+    # BLANK 2: the machine to run on (the Linux one from ci.step3.yml).
+    runs-on: ____
+    steps:
+      # Copy the repository onto the machine.
+      - uses: actions/checkout@v7
+      # Install Python 3.12. This exercise uses pip, not uv.
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      # Install pytest, the tool that runs the tests. Nothing else.
+      - run: python -m pip install pytest
+      # BLANK 3: run pytest on the exercise folder only (use python -m).
+      - run: ____

@@ -1,0 +1,5 @@
+# The pip route for Lecture 6 (uv users don't need this file).
+#   python -m pip install -r requirements-dev.txt
+# The app's own packages first, then the tools for testing it.
+-r requirements.txt
+pytest>=8
