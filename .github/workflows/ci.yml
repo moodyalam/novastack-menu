@@ -1,4 +1,5 @@
-# Runs Dan's tests on every pull request and on every push to main.
+# Runs Dan's tests on every pull request and push to main, then
+# (Step 6) builds the box and publishes it after the tests pass on main.
 name: CI
 
 # When to run.
@@ -26,3 +27,28 @@ jobs:
       - run: uv sync --locked
       # Run the tests. One failing test fails the whole job.
       - run: uv run pytest
+
+  # Build the box and publish it, but only after the tests pass on main.
+  publish:
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    # This job may also write packages (images) to GitHub's registry.
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v7
+      - name: Log in to GitHub's registry (ghcr.io)
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" |
+            docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+      - name: Build the image and push it
+        run: |
+          # The tag is the first 7 characters of the commit.
+          IMAGE="ghcr.io/$GITHUB_REPOSITORY:${GITHUB_SHA::7}"
+          # Image names must be lower case.
+          IMAGE=$(echo "$IMAGE" | tr '[:upper:]' '[:lower:]')
+          docker build -f Dockerfile.step5 -t "$IMAGE" .
+          docker push "$IMAGE"
+          echo "Published $IMAGE" >> "$GITHUB_STEP_SUMMARY"
