@@ -124,5 +124,12 @@
     "category": "snack",
     "price": "1.45",
     "icon": "🍪"
+  },
+  {
+    "sku": "D05",
+    "name": "Pumpkin spice latte",
+    "category": "drink",
+    "price": "4.50",
+    "icon": "🎃"
   }
 ]
