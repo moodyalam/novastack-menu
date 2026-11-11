@@ -131,5 +131,12 @@
     "category": "drink",
     "price": "4.50",
     "icon": "🎃"
+  },
+  {
+    "sku": "D06",
+    "name": "Iced tea",
+    "category": "drink",
+    "price": "2.20",
+    "icon": "🧊"
   }
 ]
