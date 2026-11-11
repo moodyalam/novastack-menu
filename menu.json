@@ -137,7 +137,10 @@
     "name": "Hot chocolate",
     "category": "drink",
     "price": "2.70",
-    "icon": "🍫",
+    "icon": "🍫"
+  },
+  {
+    "sku": "D07",
     "name": "Iced tea",
     "category": "drink",
     "price": "2.20",
